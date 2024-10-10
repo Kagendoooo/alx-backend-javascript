@@ -25,7 +25,7 @@ export class StudentHolberton {
   }
 
   get holbertonClass() {
-    return this._holbertonClass;
+    return this.holbertonClass;
   }
 
   get fullStudentDescription() {
@@ -44,4 +44,4 @@ const listOfStudents = [
   new StudentHolberton('Jason', 'Sandler', class2019),
 ];
 
-export { listOfStudents };
+export const listOfStudents = [student1, student2, student3, student4, student5];
