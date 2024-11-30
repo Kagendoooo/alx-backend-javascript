@@ -9,21 +9,16 @@ app.get('/', (req, res) => {
 
 app.get('/students', (req, res) => {
   const dbFile = process.argv[2];
-
-  if (!dbFile) {
-    res.status(400).send('Database file missing');
-    return;
-  }
-
-  res.status(200).write('This is the list of our students\n');
-
+  res.status(200).send('This is the list of our students\n');
   countStudents(dbFile)
-    .then((data) => {
-      res.end(data);
-    })
+    .then(() => res.end())
     .catch((error) => {
       res.status(500).send(error.message);
     });
 });
 
-app.listen(1245);
+app.listen(1245, () => {
+  console.log('Server is running on port 1245');
+});
+
+module.exports = app;
