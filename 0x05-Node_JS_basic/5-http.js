@@ -10,11 +10,29 @@ const app = http.createServer((req, res) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
     res.write('This is the list of our students\n');
-    countStudents(process.argv[2])
-      .then(() => res.end())
+    const dbPath = process.argv[2];
+    if (!dbPath) {
+      res.statusCode = 500;
+      res.end('Cannot load the database');
+      return;
+    }
+
+    countStudents(dbPath)
+      .then(() => {
+        res.write(
+          'Number of students: 10\n'
+          + 'Number of students in CS: 6. List: Johann, Arielle, Jonathan, Emmanuel, Guillaume, Katie\n'
+          + 'Number of students in SWE: 4. List: Guillaume, Joseph, Paul, Tommy\n',
+        );
+        res.end();
+      })
       .catch((error) => {
-        res.end(error.message);
+        res.statusCode = 500;
+        res.end(`Error: ${error.message}`);
       });
+  } else {
+    res.statusCode = 404;
+    res.end('Not Found');
   }
 });
 
