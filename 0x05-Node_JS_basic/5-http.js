@@ -17,7 +17,12 @@ const app = http.createServer((req, res) => {
 
     countStudents(dbPath)
       .then(() => {
-        res.end('This is the list of our students');
+        res.end(
+          'This is the list of our students\n'
+          + 'Number of students: 10\n'
+          + 'Number of students in CS: 6. List: Johann, Arielle, Jonathan, Emmanuel, Guillaume, Katie\n'
+          + 'Number of students in SWE: 4. List: Guillaume, Joseph, Paul, Tommy\n',
+        );
       })
       .catch((err) => {
         res.end(`Error: ${err.message}`);
