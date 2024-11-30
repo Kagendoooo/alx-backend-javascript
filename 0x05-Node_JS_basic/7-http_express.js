@@ -9,11 +9,18 @@ app.get('/', (req, res) => {
 
 app.get('/students', (req, res) => {
   const dbFile = process.argv[2];
-  res.status(200).send('This is the list of our students\n');
+
+  if (!dbFile) {
+    res.status(400).send('Database file missing');
+    return;
+  }
+
   countStudents(dbFile)
-    .then(() => res.end())
+    .then((data) => {
+      res.status(200).send(`This is the list of our students\n${data}`);
+    })
     .catch((error) => {
-      res.status(500).send(error.message);
+      res.status(500).send(`Cannot load the database\n${error.message}`);
     });
 });
 
